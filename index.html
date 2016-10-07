@@ -101,8 +101,11 @@
                     </div>
                 </div>
 
-                <!-- Toggle between imperial and metric units-->
-                <label>Toggle between Imperial and Metric units</label><input type="checkbox" ng-model="vm.changeMeasurementSystem" ng-change="vm.checkAll(vm.changeMeasurementSystem)" ng-click="vm.getWeather(vm.cityName, vm.changeMeasurementSystem)">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-success active">
+                        <input type="checkbox" ng-model="vm.changeMeasurementSystem" ng-change="vm.checkAll(vm.changeMeasurementSystem)" ng-click="vm.getWeather(vm.cityName, vm.changeMeasurementSystem)">Toggle Units ({{vm.measurementSystem}})
+                    </label>
+                </div>
             </div>
 
             <div class="col-xs-6">
