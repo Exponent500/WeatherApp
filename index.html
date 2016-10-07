@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html ng-app="WeatherApp" lang="en"> 
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Weather App</title>
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/animate.css/animate.css" />
+        <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+        <!-- endbower -->
+
+        <!-- inject:css -->
+        <link rel="stylesheet" href="/app/styles/main.css">
+        <!-- endinject -->  
+    </head>
+
+    <body class="ng-cloak" ng-controller="WeatherController as vm"> 
+        <div class="container">
+            <div class="col-xs-12 jumbotron">
+                <h1>Origin Weather Application</h1>
+                <h4>Always know if you'll need an umbrella!</h4>
+            </div>
+
+            <div class="col-xs-12">
+
+               <!-- Group of preset city buttons-->
+                <div class="btn-group"> 
+                     <button type="button" class="btn btn-primary" ng-click="vm.getWeather('San Diego', vm.changeMeasurementSystem)">San Diego</button>
+                     <button type="button" class="btn btn-primary" ng-click="vm.getWeather('New York', vm.changeMeasurementSystem)">New York</button>
+                     <button type="button" class="btn btn-primary" ng-click="vm.getWeather('District of Columbia', vm.changeMeasurementSystem)">Washington D.C</button>
+                     <button type="button" class="btn btn-primary" ng-click="vm.getWeather('London', vm.changeMeasurementSystem)">London</button>
+                     <button type="button" class="btn btn-primary" ng-click="vm.getWeather('Tokyo', vm.changeMeasurementSystem)">Tokyo</button>
+                </div>
+
+                <!-- City input box -->
+                <form name="myForm" class="form-group" ng-class="{'has-error has-feedback': myForm.cityName.$touched && myForm.cityName.$invalid}">
+                    <div class="input-group">
+                        <input class="form-control" type="text" ng-model="vm.cityName" name="cityName" placeholder="Enter City Name" ng-minlength = "3" required>
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary" type="button" ng-click="vm.getWeather(vm.cityName, vm.changeMeasurementSystem)">Go!</button>
+                        </span>
+                    </div>
+                    <div ng-messages="myForm.cityName.$error" ng-show="myForm.cityName.$touched" role="alert">
+                        <div ng-message="required"><strong>You haven't entered a name yet!</strong></div> 
+                        <div ng-message="minlength"><strong>Not enough characters entered!</strong></div>                           
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="col-xs-6">
+
+                <!-- Panel to display city information -->
+                <div class="panel panel-info imperial-to-metric-margin">
+                    <div class="panel-heading">
+                        <span>City Information ({{vm.measurementSystem}})</span>
+                    </div>
+                    <div class="panel-body" ng-class="hide" ng-show="vm.showWeatherInfo">
+                        
+                        <!-- Displays city name and weather icon -->
+                        <div class="col-xs-12">
+                            <div class="text-center">
+                                <h3><img src="{{vm.weatherIcon}}"><strong>{{vm.weather.name}}</strong></h3>
+                                <h6 class="bottom-border latlonmargin"><strong>Lat/Long:</strong> {{vm.latLon}}</h6>
+                            </div>
+                        </div>
+
+                        <!-- Displays Temperature, Pressure and Humidity -->
+                        <div class="col-xs-12">
+                            <div class="col-xs-4 text-center">
+                                <label><strong>Temperature</strong></label>
+                                <h5>{{vm.weather.main.temp}}{{vm.temperatureUnits}}</h5>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <label><strong>Pressure</strong></label>
+                                <h5>{{vm.weather.main.pressure}}</h5>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <label><strong>Humidity</strong></label>
+                                <h5>{{vm.weather.main.humidity}}%</h5>
+                            </div>                        
+                        </div>
+
+                        <!-- Display lowest/highest temp and wind speed -->
+                        <div class="col-xs-12">
+                            <div class="col-xs-4 text-center">
+                                <label><strong>Lowest Temp</strong></label>
+                                <h5>{{vm.weather.main.temp_min}}{{vm.temperatureUnits}}</h5>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <label><strong>Highest Temp</strong></label>
+                                <h5>{{vm.weather.main.temp_max}}{{vm.temperatureUnits}}</h5>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <label><strong>Wind Speed</strong></label>
+                                <h5>{{vm.weather.wind.speed}}{{vm.windSpeedUnits}}</h5>
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Toggle between imperial and metric units-->
+                <label>Toggle between Imperial and Metric units</label><input type="checkbox" ng-model="vm.changeMeasurementSystem" ng-change="vm.checkAll(vm.changeMeasurementSystem)" ng-click="vm.getWeather(vm.cityName, vm.changeMeasurementSystem)">
+            </div>
+
+            <div class="col-xs-6">
+                <!-- Panel to display search history -->
+                <div class="panel panel-info">
+              
+                    <div class="panel-heading">
+                        <span>Search History</span>
+                    </div>
+                    
+                    <div class="panel-body">
+
+                        <!-- Table that will list search history -->
+                        <table class="table table-striped">
+                            <tr class="animated fadeInUp" ng-repeat="searchHistory in vm.searchHistory">
+                                <td>
+                                    {{searchHistory.name}}
+                                </td>
+                                <td class="text-right">
+                                    {{searchHistory.time * 1000 | date:'MM/dd/yyyy'}}<br>{{searchHistory.time * 1000 | date:'HH:mm:ss'}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div> 
+                
+                </div>                
+            </div>
+
+        </div>     
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+        <script src="bower_components/angular-messages/angular-messages.js"></script>
+        <!-- endbower -->
+
+        <!-- inject:js -->
+        <script src="/app/app.js"></script>
+        <script src="/app/weather.controller.js"></script>
+        <script src="/app/weather.factory.js"></script>
+        <!-- endinject -->
+    </body>
+</html>

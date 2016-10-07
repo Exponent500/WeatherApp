@@ -1,0 +1,22 @@
+.container {
+    padding-top: 35px;
+}
+
+.ng-cloak {
+	display:none;
+}
+
+.bottom-border {
+	border-bottom: 1px lightgray solid;
+}
+
+.latlonmargin {
+	margin-right: -2rem;
+	margin-left: -2rem;
+	padding-bottom: 2rem;
+}
+
+.imperial-to-metric-margin{
+	
+	margin-bottom: .1rem;
+}

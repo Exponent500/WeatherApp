@@ -1,0 +1,38 @@
+{
+  "name": "WeatherApp",
+  "main": "gulpfile.js",
+  "homepage": "https://github.com/Exponent500/WeatherApp",
+  "authors": [
+    "Exponent500 <reuvenkishon@gmail.com>"
+  ],
+  "description": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "animate.css": "^3.5.2",
+    "bulma": "^0.2.1",
+    "angular": "^1.5.8",
+    "angular-toastr": "^2.1.1",
+    "angular-messages": "^1.5.8",
+    "boostrap-toggle": "^1.0.0"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css"
+      ]
+    },
+    "bootstrap-toggle":{
+      "main": [
+        "css/bootstrap-toggle.css"
+      ]
+    }
+  }
+}
