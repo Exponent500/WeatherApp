@@ -34,7 +34,7 @@
                      <button type="button" class="btn btn-primary" ng-click="vm.getWeather('Tokyo', vm.changeMeasurementSystem)">Tokyo</button>
                 </div>
 
-                <!-- City input box -->
+                <!-- Phone number input box -->
                 <form name="myForm" class="form-group" ng-class="{'has-error has-feedback': myForm.cityName.$touched && myForm.cityName.$invalid}">
                     <div class="input-group">
                         <input class="form-control" type="text" ng-model="vm.cityName" name="cityName" placeholder="Enter City Name" ng-minlength = "3" required>
@@ -149,3 +149,5 @@
         <!-- endinject -->
     </body>
 </html>
+
+<!-- code reviewed by Jesse, Tristan, and John Abanton on 10/12/2016 -->

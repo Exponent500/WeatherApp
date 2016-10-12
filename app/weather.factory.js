@@ -48,3 +48,5 @@
         }
     }
 })();
+
+//code reviewed by Tristan, John Abanto and Jesse on 10/12/2016
